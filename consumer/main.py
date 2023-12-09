@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from kafka.kafka_consumer import consume_messages, shutdown
 from fastapi.middleware.cors import CORSMiddleware
 from mongo.mongodb import connect_to_db, is_db_deployed
@@ -49,7 +49,9 @@ def stop_consuming():
 @app.on_event("startup")
 def startup_db_client():
     connect_to_db(app)
-    consume_messages()
+    consume_thread = threading.Thread(target=consume_messages)
+    consume_thread.daemon = True
+    consume_thread.start()
 
 
 @app.on_event("shutdown")
