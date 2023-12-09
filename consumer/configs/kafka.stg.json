@@ -1,0 +1,6 @@
+{
+  "bootstrap.servers": "kafka-service.leaf-image-management-system.svc.cluster.local:9092",
+  "group.id": "pepper-potato-tomato-group",
+  "client.id": "image-consumer",
+  "auto.offset.reset": "earliest"
+}

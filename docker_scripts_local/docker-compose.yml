@@ -1,0 +1,188 @@
+version: "3"
+
+services:
+  camera_job:
+    image: 12221994/camera_job
+    environment:
+      - ENV=stg
+    ports:
+      - "5050:5050"
+    container_name: camera_job
+    networks:
+      - my_network
+
+  producer_plant_db:
+    image: 12221994/producer_plant_db
+    container_name: mongodb-producer.leaf-image-management-system.svc.cluster.local
+    networks:
+      - my_network
+
+  producer_plant_db_ui:
+    image: mongo-express
+    container_name: producer_plant_db_ui
+    ports:
+      - "9001:8081"
+    networks:
+      - my_network
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb-producer.leaf-image-management-system.svc.cluster.local
+      ME_CONFIG_MONGODB_PORT: 27017
+    depends_on:
+      - producer_plant_db
+
+  image_api:
+    image: 12221994/image_api
+    environment:
+      - ENV=stg
+    ports:
+      - "8080:8080"
+      - "8050:8050"
+    container_name: image-api.leaf-image-management-system.svc.cluster.local
+    depends_on:
+      - producer_plant_db
+    networks:
+      - my_network
+
+  leaf_disease_recognizer_job:
+    image: 12221994/leaf_disease_recognizer_job
+    environment:
+      - ENV=stg
+    ports:
+      - "5051:5050"
+    container_name: leaf_disease_recognizer_job
+    networks:
+      - my_network
+
+  image_analyzer_api:
+    image: 12221994/image_analyzer_api
+    environment:
+      - ENV=stg # depends on nothing but itself
+    ports:
+      - "8081:8080"
+    container_name: image-analyzer-api.leaf-image-management-system.svc.cluster.local
+    networks:
+      - my_network
+
+  users_job:
+    image: 12221994/users_job
+    environment:
+      - ENV=stg
+    ports:
+      - "5052:5050"
+    container_name: users_job
+    networks:
+      - my_network
+
+  db_synchronizer_job:
+    image: 12221994/db_synchronizer_job
+    environment:
+      - ENV=stg
+    ports:
+      - "5053:5050"
+      - "8051:8050"
+    container_name: db-synchronizer-job.leaf-image-management-system.svc.cluster.local
+    networks:
+      - my_network
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - my_network
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka-service.leaf-image-management-system.svc.cluster.local
+    ports:
+      - "9093:9092"
+    depends_on:
+      - zookeeper
+    networks:
+      - my_network
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka-service.leaf-image-management-system.svc.cluster.local:9092,OUTSIDE://localhost:9093
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-ui:
+    image: obsidiandynamics/kafdrop
+    container_name: kafdrop
+    ports:
+      - "9000:9000"
+    depends_on:
+      - kafka
+    networks:
+      - my_network
+    environment:
+      KAFKA_BROKERCONNECT: "kafka-service.leaf-image-management-system.svc.cluster.local:9092"
+      KAFKA_ZOOKEEPERCONNECT: "zookeeper:2181"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    networks:
+      - my_network
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - my_network
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_USER=admin
+    depends_on:
+      - image_api
+      - db_synchronizer_job
+
+  consumer:
+    build:
+      context: ../consumer
+      dockerfile: Dockerfile
+    environment:
+      - ENV=stg
+    ports:
+      - "8000:8000"
+    container_name: consumer-app
+    networks:
+      - my_network
+    depends_on:
+      - kafka
+      - consumer_plant_db
+
+  consumer_plant_db:
+    image: 12221994/consumer_plant_db
+    environment:
+      - ENV=stg
+    container_name: mongodb-consumer.leaf-image-management-system.svc.cluster.local
+    networks:
+      - my_network
+
+  consumer_plant_db_ui:
+    image: mongo-express
+    container_name: consumer_plant_db_ui
+    ports:
+      - "9002:8081"
+    networks:
+      - my_network
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb-consumer.leaf-image-management-system.svc.cluster.local
+      ME_CONFIG_MONGODB_PORT: 27017
+    depends_on:
+      - consumer_plant_db
+
+networks:
+  my_network:
+    driver: bridge

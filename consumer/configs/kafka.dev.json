@@ -1,0 +1,7 @@
+{
+  "bootstrap.servers": "localhost:9093",
+  "group.id": "pepper-potato-tomato-group",
+  "enable.auto.commit": "false",
+  "auto.offset.reset": "earliest",
+  "client.id": "my-consumer-service"
+}
