@@ -76,8 +76,8 @@ def consume_messages():
 
     try:
         while running:
-            msg = consumer.poll(timeout=10.0)
-            print("message received from ", msg.topic())
+
+            msg = consumer.poll(timeout=11.0)
 
             if msg is None:
                 continue
@@ -89,6 +89,7 @@ def consume_messages():
                     continue
 
             received_message = msg.value().decode('utf-8')
+
             topic = msg.topic()
 
             if topic is None:

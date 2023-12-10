@@ -73,16 +73,16 @@ services:
     networks:
       - my_network
 
-  db_synchronizer_job:
-    image: 12221994/db_synchronizer_job
-    environment:
-      - ENV=stg
-    ports:
-      - "5053:5050"
-      - "8051:8050"
-    container_name: db-synchronizer-job.leaf-image-management-system.svc.cluster.local
-    networks:
-      - my_network
+  # db_synchronizer_job:
+  #   image: 12221994/db_synchronizer_job
+  #   environment:
+  #     - ENV=stg
+  #   ports:
+  #     - "5053:5050"
+  #     - "8051:8050"
+  #   container_name: db-synchronizer-job.leaf-image-management-system.svc.cluster.local
+  #   networks:
+  #     - my_network
 
   zookeeper:
     image: wurstmeister/zookeeper
@@ -133,19 +133,19 @@ services:
     ports:
       - "9090:9090"
 
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    networks:
-      - my_network
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_SECURITY_ADMIN_USER=admin
-    depends_on:
-      - image_api
-      - db_synchronizer_job
+  # grafana:
+  #   image: grafana/grafana
+  #   container_name: grafana
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - my_network
+  #   environment:
+  #     - GF_SECURITY_ADMIN_PASSWORD=admin
+  #     - GF_SECURITY_ADMIN_USER=admin
+  #   depends_on:
+  #     - image_api
+  #     - db_synchronizer_job
 
   consumer:
     build:

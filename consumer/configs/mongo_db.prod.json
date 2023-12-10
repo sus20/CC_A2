@@ -2,8 +2,6 @@
   "host": "mongodb-consumer.leaf-image-management-system.svc.cluster.local",
   "port": "27017",
   "db": "database",
-  "user": "root",
-  "pass": "rootpassword",
   "db_name_plant": "imagedbplantconsumer",
   "col_name_plant": [
     "imagecolplantpotato",

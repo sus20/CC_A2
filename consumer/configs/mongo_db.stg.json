@@ -1,8 +1,11 @@
 {
   "host": "mongodb-consumer.leaf-image-management-system.svc.cluster.local",
   "port": "27017",
-  "db": "database",
-  "db_name": "consumer_db",
-  "collections": ["potato", "tomato", "pepper"],
-  "collection_is_deployed": "is_deployed"
+  "db_name_plant": "imagedbplantconsumer",
+  "col_name_plant": [
+    "imagecolplantpotato",
+    "imagecolplanttomato",
+    "imagecolplantpepper"
+  ],
+  "col_is_deployed": "is_deployed"
 }

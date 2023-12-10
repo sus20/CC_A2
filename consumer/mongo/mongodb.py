@@ -21,22 +21,21 @@ def connect_to_db(app):
     }
 
     app.mongodb_client = MongoClient(**mongo_params)
-
-    app.db = app.mongodb_client[data["db"]]
-    app.collection_potato = app.db[data["collections"][0]]
-    app.collection_tomato = app.db[data["collections"][1]]
-    app.collection_pepper = app.db[data["collections"][2]]
-    app.collection_is_deployed = app.db[data["collection_is_deployed"]]
+    app.db_name_plant = app.mongodb_client[data["db_name_plant"]]
+    app.col_name_plant_potato = app.db_name_plant[data["col_name_plant"][0]]
+    app.col_name_plant_tomato = app.db_name_plant[data["col_name_plant"][1]]
+    app.col_name_plant_pepper = app.db_name_plant[data["col_name_plant"][2]]
+    app.col_name_plant_is_deployed = app.db_name_plant[data["col_is_deployed"]]
 
     verify_deploy_data = {"is_deployed": "yes"}
-    app.collection_is_deployed.insert_one(verify_deploy_data)
+    app.col_name_plant_is_deployed.insert_one(verify_deploy_data)
 
     global main_app
     main_app = app
 
 
 def is_db_deployed(app):
-    item = app.collection_is_deployed.find_one()
+    item = app.col_name_plant_is_deployed.find_one()
     if item is not None:
         return {"is_deplyed": "True"}
     else:
@@ -44,12 +43,12 @@ def is_db_deployed(app):
 
 
 def save_potato(potato):
-    main_app.collection_potato.insert_one(potato)
+    main_app.col_name_plant_potato.insert_one(potato)
 
 
 def save_tomato(tomato):
-    main_app.collection_tomato.insert_one(tomato)
+    main_app.col_name_plant_tomato.insert_one(tomato)
 
 
 def save_pepper(pepper):
-    main_app.collection_pepper.insert_one(pepper)
+    main_app.col_name_plant_pepper.insert_one(pepper)
