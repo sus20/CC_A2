@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafdrop
+  namespace: leaf-image-management-system
+  labels:
+    name: "kafdrop"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: "kafdrop"
+  template:
+    metadata:
+      labels:
+        name: "kafdrop"
+    spec:
+      containers:
+        - name: kafka-ui
+          image: obsidiandynamics/kafdrop
+          ports:
+            - containerPort: 9000
+          env:
+            - name: KAFKA_BROKERCONNECT
+              value: "kafka-service.leaf-image-management-system.svc.cluster.local:9092"
+            - name: KAFKA_ZOOKEEPERCONNECT
+              value: "zookeeper:2181"

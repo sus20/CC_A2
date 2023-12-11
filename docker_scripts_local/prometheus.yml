@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: image-api.leaf-image-management-system.svc.cluster.local
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          ["image-api.leaf-image-management-system.svc.cluster.local:8050"]
+
+  - job_name: db-synchronizer-job.leaf-image-management-system.svc.cluster.local
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          [
+            "db-synchronizer-job.leaf-image-management-system.svc.cluster.local:8050",
+          ]

@@ -1,0 +1,6 @@
+{
+  "service_url": "0.0.0.0",
+  "service_port": 5050,
+  "image_api_url": "0.0.0.0",
+  "image_api_port": 8080
+}

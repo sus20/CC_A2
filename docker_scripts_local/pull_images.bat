@@ -1,0 +1,10 @@
+docker pull 12221994/image_api
+docker pull 12221994/image_analyzer_api
+docker pull 12221994/users_job
+docker pull 12221994/camera_job
+docker pull 12221994/leaf_disease_recognizer_job
+docker pull 12221994/db_synchronizer_job
+docker pull 12221994/producer_plant_db
+docker pull 12221994/consumer_plant_db
+docker pull wurstmeister/zookeeper
+docker pull wurstmeister/kafka

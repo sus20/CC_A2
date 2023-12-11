@@ -1,0 +1,15 @@
+/image_api
+/image_analyzer_api
+/users_job
+/camera_job
+/leaf_disease_recognizer_job
+/db_synchronizer_job
+/producer_plant_db
+/consumer_plant_db
+/zookeeper
+/kafka
+/consumer_job/__pycache__
+/consumer_job/venv
+/consumer/
+
+
