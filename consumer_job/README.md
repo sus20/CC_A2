@@ -221,6 +221,10 @@ This service includes an API with the following endpoints.
 
   This response returns a 200 status code if the operation was successful, and a 4xx status code otherwise.
 
+## scalability and bottlenecks
+
+Consumer service is designed with scalability in mind, capable of horizontal scaling to accommodate changing demands by increasing no of pods in kubernetes. An increase in dataflow intensity or photo modifications in the Kafka cluster would require horizontal scaling by adding more nodes to handle the higher throughput which is done automatically by kubernetes. Stream-processing is preferred for real-time updates, providing lower latency compared to batch processing. Scaling on GKE involves dynamic resource allocation, leveraging Kubernetes' auto-scaling features for efficient utilization and cost-effectiveness.
+
 # Challenge(s) Faced During Implementation
 
 During the development of the consumer service and attempts to establish a connection with Kafka, I encountered an issue, when trying to connect without creating a consumer image or container. The initial attempt involved using the following properties in the kafka.dev.json config file:
@@ -250,6 +254,10 @@ The issue was resolved by creating a consumer Docker container and providing the
 }
 ```
 
+#### Issue: Threading in the python program:
+
+Encountered concurrency challenges in a Python FastAPI project due to single-threaded operations for DB connection, Kafka consumption, and main app logic. Addressed the issue by implementing distinct threads for each task, mitigating bottlenecks and optimizing performance
+
 **Local Development using Docker Desktop:**
 
 1. **Local Consumer Service:** The consumer service was implemented locally in FastAPI, providing a mechanism for consuming data from kafka broker and forwarding to consumer_plant_db.
@@ -276,6 +284,11 @@ The issue was resolved by creating a consumer Docker container and providing the
    - `start.stg.sh` to deploy the consumer service locally.
    - `open.stg.sh` to expose the port of the consumer service.
    - `close.stg.sh` to close the port when needed.
+
+   Kubernetes manifest files for production and staging are located at directory:
+
+   - consumer /prod /..
+   - consumer /stg /..
 
 # GCP Screenshots
 
