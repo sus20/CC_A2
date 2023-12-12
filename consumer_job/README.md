@@ -85,8 +85,8 @@ This service includes an API with the following endpoints.
         "camera_id": 1,
         "data": "ffd8ffe000104a46...", (encoded-image-data)
         "gps_coordinates": [
-        48.476563,
-        16.585654
+          48.476563,
+          16.585654
         ],
         "created_at": "2023-10-08T15:39:49.123123",
         "updated_at": "2023-10-08T15:39:49.123123",
@@ -295,7 +295,7 @@ The issue was resolved by creating a consumer Docker container and providing the
   ![workflow](imagesReadme/ingress.png)
 
 - cluster deleted
-- ![Alt text](imagesReadme/clusterdeleted.png)
+- ![workflow](imagesReadme/clusterdeleted.png)
 
 # Problems Encountered:
 
@@ -320,6 +320,8 @@ The issue was successfully resolved by using the long names as container names d
 ## Unresolved Challenges
 
 I was unable to complete the task, which involved comparing the bandwidth between the pre-implemented batch processing application and the stream processing implementation. The goal was to connect to Grafana, either locally or on the cloud.and interface with the pre-installed Prometheus servers of the LIMS for streaming data, as well as with the DB Synchronizer Job for batch processing.Unfortunately, I couldn't fulfill these requirements.
+
+The service is located on my GitHub repository [GitHub](https://github.com/sus20/CC_A2.git)
 
 ### Reference
 

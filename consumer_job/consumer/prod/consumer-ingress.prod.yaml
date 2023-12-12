@@ -5,6 +5,7 @@ metadata:
   name: consumer-ingress
   namespace: leaf-image-management-system
   annotations:
+    kubernetes.io/ingress.class: "gce"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:

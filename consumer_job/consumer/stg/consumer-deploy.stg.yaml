@@ -4,7 +4,7 @@ metadata:
   name: "consumer-app"
   namespace: "leaf-image-management-system"
   labels:
-    name: "consumer"
+    name: "consumer-app"
 spec:
   replicas: 1
   selector:
@@ -23,3 +23,23 @@ spec:
           env:
             - name: ENV
               value: "stg"
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8000
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"

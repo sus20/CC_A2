@@ -3,12 +3,14 @@ kind: Service
 metadata:
   name: "consumer-app"
   namespace: "leaf-image-management-system"
+  labels:
+    name: "consumer-app"
 spec:
+  type: NodePort
   selector:
-    app: "consumer-app"
+    name: "consumer-app"
   ports:
     - protocol: TCP
       port: 8000
       targetPort: 8000
       nodePort: 30055
-  type: NodePort
