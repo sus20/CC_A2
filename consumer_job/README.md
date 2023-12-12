@@ -223,7 +223,7 @@ This service includes an API with the following endpoints.
 
 # Challenge(s) Faced During Implementation
 
-During the development of the consumer service and attempts to establish a connection with Kafka, I encountered an issue when trying to connect without creating a consumer image or container. The initial attempt involved using the following properties in the kafka.dev.json config file:
+During the development of the consumer service and attempts to establish a connection with Kafka, I encountered an issue, when trying to connect without creating a consumer image or container. The initial attempt involved using the following properties in the kafka.dev.json config file:
 
 ```json
 {
@@ -277,6 +277,26 @@ The issue was resolved by creating a consumer Docker container and providing the
    - `open.stg.sh` to expose the port of the consumer service.
    - `close.stg.sh` to close the port when needed.
 
+# GCP Screenshots
+
+- gcp cluster
+  ![workflow](imagesReadme/gpc_cluster.png)
+
+- connection via terminal
+  ![workflow](imagesReadme/connectionViaTerminal.png)
+
+- Laod balancer and protocols
+  ![workflow](imagesReadme/loadblancer.png)
+
+- deployed pods
+  ![workflow](imagesReadme/pods.png)
+
+- deployed ingress
+  ![workflow](imagesReadme/ingress.png)
+
+- cluster deleted
+- ![Alt text](imagesReadme/clusterdeleted.png)
+
 # Problems Encountered:
 
 #### Issue 1: Incorrect Dockumentation for `/is-deployed` Endpoint.
@@ -296,6 +316,10 @@ kafka-service.leaf-image-management-system.svc.cluster.local:9092: Name or servi
 ```
 
 The issue was successfully resolved by using the long names as container names directly in the `docker-compose.yaml` file. This ensures that the services can be correctly identified and addressed within the Docker Compose setup. By specifying the full container names, the error related to name or service not known is eliminated, allowing for proper communication and connectivity between the different services in the Docker environment.
+
+## Unresolved Challenges
+
+I was unable to complete the task, which involved comparing the bandwidth between the pre-implemented batch processing application and the stream processing implementation. The goal was to connect to Grafana, either locally or on the cloud.and interface with the pre-installed Prometheus servers of the LIMS for streaming data, as well as with the DB Synchronizer Job for batch processing.Unfortunately, I couldn't fulfill these requirements.
 
 ### Reference
 

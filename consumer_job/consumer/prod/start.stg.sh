@@ -11,13 +11,17 @@ apply_kubectl() {
 
 # Deploy Kafdrop
 echo "Deploying Kafdrop"
-apply_kubectl kafdrop-deploy.stg.yaml
-apply_kubectl kafdrop-service.stg.yaml
+apply_kubectl kafdrop-deploy.prod.yaml
+apply_kubectl kafdrop-service.prod.yaml
+apply_kubectl kafdrop-ingress.prod.yaml
 
 echo "Kafdrop deployment completed successfully."
 
 echo "Deploying Consumer Application"
-apply_kubectl consumer-deploy.stg.yaml
-apply_kubectl consumer-service-stg.yaml
+apply_kubectl consumer-deploy.prod.yaml
+apply_kubectl consumer-service.prod.yaml
+apply_kubectl consumer-ingress.prod.yaml
+apply_kubectl consumer-api-backend-config.prod.yaml
+
 
 echo "Consumer deployment and service completed successfully."

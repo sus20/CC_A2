@@ -5,9 +5,10 @@ metadata:
   namespace: "leaf-image-management-system"
 spec:
   selector:
-    name: "consumer-app"
+    app: "consumer-app"
   ports:
     - protocol: TCP
       port: 8000
       targetPort: 8000
+      nodePort: 30055
   type: NodePort

@@ -1,0 +1,27 @@
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: consumer-ingress
+  namespace: leaf-image-management-system
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /ping
+            pathType: Prefix
+            backend:
+              service:
+                name: consumer-app
+                port:
+                  number: 8000
+
+          - path: /image-plant
+            pathType: Prefix
+            backend:
+              service:
+                name: consumer-app
+                port:
+                  number: 8000

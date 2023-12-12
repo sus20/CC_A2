@@ -25,3 +25,10 @@ spec:
               value: "kafka-service.leaf-image-management-system.svc.cluster.local:9092"
             - name: KAFKA_ZOOKEEPERCONNECT
               value: "zookeeper:2181"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
