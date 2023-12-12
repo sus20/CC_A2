@@ -15,3 +15,9 @@ apply_kubectl kafdrop-deploy.stg.yaml
 apply_kubectl kafdrop-service.stg.yaml
 
 echo "Kafdrop deployment completed successfully."
+
+echo "Deploying Consumer Application"
+apply_kubectl consumer-deploy.stg.yaml
+apply_kubectl consumer-service-stg.yaml
+
+echo "Consumer deployment and service completed successfully."

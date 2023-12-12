@@ -16,3 +16,6 @@ kill_port_forward() {
 
 # Stop kafdrop
 kill_port_forward 9000
+
+# stop consumer-app
+kill_port_forward 8000

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafdrop-service
+  namespace: leaf-image-management-system
+  labels:
+    name: "kafdrop"
+spec:
+  selector:
+    name: "kafdrop"
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+  type: ClusterIP

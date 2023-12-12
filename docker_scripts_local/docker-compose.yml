@@ -145,14 +145,12 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
 
   consumer:
-    build:
-      context: ../consumer_job
-      dockerfile: Dockerfile
+    image: sussap/consumer:latest
+    container_name: consumer-app
     environment:
       - ENV=stg
     ports:
       - "8000:8000"
-    container_name: consumer-app
     networks:
       - my_network
     depends_on:

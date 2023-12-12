@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "consumer-app"
+  namespace: "leaf-image-management-system"
+  labels:
+    name: "consumer"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: "consumer-app"
+  template:
+    metadata:
+      labels:
+        name: "consumer-app"
+    spec:
+      containers:
+        - name: "consumer-app"
+          image: "sussap/consumer:latest"
+          ports:
+            - containerPort: 8000
+          env:
+            - name: ENV
+              value: "prod"
